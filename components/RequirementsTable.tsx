@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 interface RequirementsTableProps {
   heights: number[];
@@ -11,7 +11,6 @@ const RequirementsTable = ({
   requirements,
   setRequirements,
 }: RequirementsTableProps) => {
-  const requirementInputRef = useRef<HTMLInputElement>(null);
   const [currentRequirement, setCurrentRequirement] = useState<string>("");
 
   const handleAddRequirement = () => {
