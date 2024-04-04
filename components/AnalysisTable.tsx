@@ -65,7 +65,7 @@ const AnalysisTable = ({
     );
   };
   return (
-    <div className="flex flex-row">
+    <div className="w-2/3 overflow-x-auto flex flex-row">
       <div className="mt-12 flex flex-row">
         <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-48">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
