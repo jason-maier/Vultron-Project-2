@@ -19,7 +19,6 @@ export interface Coordinate {
 export default function Home() {
   const [requirements, setRequirements] = useState<string[]>([]);
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
-  const [stringsToAssign, setStringsToAssign] = useState<string[]>([]);
   const [coordinates, setCoordinates] = useState<Coordinate[]>([]);
 
   const { complete } = useCompletion({
@@ -40,9 +39,6 @@ export default function Home() {
 
     if (response) {
       const parsedResponse = JSON.parse(response);
-      setStringsToAssign(
-        parsedResponse.choices.map((choice: any) => choice.text)
-      );
       return parsedResponse.choices.map((choice: any) => choice.text);
     }
   };
@@ -73,6 +69,13 @@ export default function Home() {
         )
       );
     });
+
+    const tds = document.querySelectorAll("td");
+    tds.forEach((td) => {
+      td.classList.remove("active");
+    });
+
+    setCoordinates([]);
   };
 
   const handleAddAnalysis = () => {

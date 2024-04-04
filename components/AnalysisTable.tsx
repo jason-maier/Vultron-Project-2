@@ -1,5 +1,4 @@
 import { Analysis, Coordinate } from "@/app/page";
-import AnalysisInputs from "./AnalysisInputs";
 
 interface AnalysisTableProps {
   analyses: Analysis[];
@@ -16,16 +15,11 @@ const AnalysisTable = ({
   setAnalyses,
   setCoordinates,
 }: AnalysisTableProps) => {
-  const handleAddAnalysis = () => {
-    const answerArray = requirements.map(() => "");
-    setAnalyses((prevAnalyses) => [
-      ...prevAnalyses,
-      {
-        title: `Example Title ${prevAnalyses.length + 1}`,
-        prompt: "Write your prompt here...",
-        answers: answerArray,
-      },
-    ]);
+  // Write a function so that on click each td item toggles the active class
+  // The active class should be a different color
+
+  const toggleActive = (e: React.MouseEvent<HTMLTableDataCellElement>) => {
+    e.currentTarget.classList.toggle("active");
   };
 
   const handleSelectOrUnselectCoordinate = (title: string, index: number) => {
@@ -82,8 +76,6 @@ const AnalysisTable = ({
           </tr>
         </thead>
         <tbody>
-          {/* Determine the number of table rows using the length of answers */}
-          {/* Iterate through analyses to get each individual analysis */}
           {requirements.map((requirement, index) => (
             <tr
               key={index}
@@ -93,9 +85,10 @@ const AnalysisTable = ({
                 <td
                   key={i}
                   className="px-6 py-4"
-                  onClick={() =>
-                    handleSelectOrUnselectCoordinate(analysis.title, index)
-                  }
+                  onClick={(event) => {
+                    toggleActive(event);
+                    handleSelectOrUnselectCoordinate(analysis.title, index);
+                  }}
                 >
                   {analysis.answers[index]
                     ? analysis.answers[index]
@@ -104,7 +97,6 @@ const AnalysisTable = ({
               ))}
             </tr>
           ))}
-          {/* Make a row of each of the prompts for the analyses */}
           <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             {analyses.map((analysis, index) => (
               <td key={index} className="px-6 py-4">
@@ -125,12 +117,3 @@ const AnalysisTable = ({
 };
 
 export default AnalysisTable;
-
-{
-  /* <AnalysisInputs
-            analysis={analysis}
-            index={index}
-            handleUpdatePrompt={handleUpdatePrompt}
-            handleUpdateTitle={handleUpdateTitle}
-          /> */
-}

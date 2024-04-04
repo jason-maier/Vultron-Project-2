@@ -31,3 +31,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.active {
+  @apply bg-slate-700 text-white;
+}
