@@ -41,13 +41,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const analysis = generateAnalyses([
-      "Provide some good names for coffee shops",
-      "Provide some good names for electronics stores",
-    ]);
-  }, []);
-
-  useEffect(() => {
     setAnalyses((prevAnalyses) =>
       prevAnalyses.map((analysis) => ({
         ...analysis,
@@ -55,6 +48,36 @@ export default function Home() {
       }))
     );
   }, [requirements]);
+
+  const generateAnalysis = async () => {
+    const prompts = coordinates.map((coordinate) => {
+      const requirement = requirements[coordinate.index];
+      const analysis = analyses.find(
+        (analysis) => analysis.title === coordinate.title
+      );
+      return `given the requirement ${requirement}, ${analysis?.prompt}`;
+    });
+
+    console.log(prompts, "<<<< PROMPTS");
+
+    const generatedAnalyses = await generateAnalyses(prompts);
+
+    coordinates.forEach((coordinate, index) => {
+      const analysis = generatedAnalyses[index];
+      setAnalyses((prevAnalyses) =>
+        prevAnalyses.map((prevAnalysis) =>
+          prevAnalysis.title === coordinate.title
+            ? {
+                ...prevAnalysis,
+                answers: prevAnalysis.answers.map((answer, i) =>
+                  i === coordinate.index ? analysis : answer
+                ),
+              }
+            : prevAnalysis
+        )
+      );
+    });
+  };
 
   console.log(coordinates, "<<<< COORDINATES");
 
@@ -73,6 +96,7 @@ export default function Home() {
           setAnalyses={setAnalyses}
           setCoordinates={setCoordinates}
         />
+        <button onClick={generateAnalysis}>GENERATE</button>
       </div>
     </main>
   );

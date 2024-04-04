@@ -48,6 +48,14 @@ const AnalysisTable = ({
     }
   };
 
+  const handleUpdatePrompt = (index: number, prompt: string) => {
+    setAnalyses((prevAnalyses) =>
+      prevAnalyses.map((analysis, i) =>
+        i === index ? { ...analysis, prompt } : analysis
+      )
+    );
+  };
+
   const handleUpdateTitle = (index: number, title: string) => {
     setAnalyses((prevAnalyses) =>
       prevAnalyses.map((analysis, i) =>
@@ -114,6 +122,9 @@ const AnalysisTable = ({
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Type your prompt here..."
             value={analysis.prompt}
+            onChange={(e) => {
+              handleUpdatePrompt(index, e.target.value);
+            }}
           ></textarea>
         </div>
       ))}
