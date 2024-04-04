@@ -106,6 +106,7 @@ const AnalysisTable = ({
                   onChange={(e) => {
                     handleUpdatePrompt(index, e.target.value);
                   }}
+                  placeholder="Write your prompt here..."
                 />
               </td>
             ))}

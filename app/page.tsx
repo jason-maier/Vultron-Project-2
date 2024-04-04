@@ -85,7 +85,7 @@ export default function Home() {
       ...prevAnalyses,
       {
         title: `Example Title ${prevAnalyses.length + 1}`,
-        prompt: "Write your prompt here...",
+        prompt: "",
         answers: answerArray,
       },
     ]);
