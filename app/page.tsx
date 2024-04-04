@@ -11,12 +11,18 @@ export interface Analysis {
   answers: string[];
 }
 
+export interface Coordinate {
+  title: string;
+  index: number;
+}
+
 // given the requirement ${requirement}, ${analysis.prompt}
 
 export default function Home() {
   const [requirements, setRequirements] = useState<string[]>([]);
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
   const [stringsToAssign, setStringsToAssign] = useState<string[]>([]);
+  const [coordinates, setCoordinates] = useState<Coordinate[]>([]);
 
   const { complete } = useCompletion({
     api: "/api/completion",
@@ -34,8 +40,6 @@ export default function Home() {
     }
   };
 
-  console.log(stringsToAssign, "<<<< STRINGS TO ASSIGN");
-
   useEffect(() => {
     const analysis = generateAnalyses([
       "Provide some good names for coffee shops",
@@ -52,6 +56,8 @@ export default function Home() {
     );
   }, [requirements]);
 
+  console.log(coordinates, "<<<< COORDINATES");
+
   return (
     <main className="flex min-h-screen flex-col p-24">
       <h1 className="text-3xl">Requirement Analysis Generator</h1>
@@ -62,8 +68,10 @@ export default function Home() {
         />
         <AnalysisTable
           analyses={analyses}
+          coordinates={coordinates}
           requirements={requirements}
           setAnalyses={setAnalyses}
+          setCoordinates={setCoordinates}
         />
       </div>
     </main>

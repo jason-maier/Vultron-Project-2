@@ -1,15 +1,19 @@
-import { Analysis } from "@/app/page";
+import { Analysis, Coordinate } from "@/app/page";
 
 interface AnalysisTableProps {
   analyses: Analysis[];
+  coordinates: Coordinate[];
   requirements: string[];
   setAnalyses: React.Dispatch<React.SetStateAction<Analysis[]>>;
+  setCoordinates: React.Dispatch<React.SetStateAction<Coordinate[]>>;
 }
 
 const AnalysisTable = ({
   analyses,
+  coordinates,
   requirements,
   setAnalyses,
+  setCoordinates,
 }: AnalysisTableProps) => {
   const handleAddAnalysis = () => {
     const answerArray = requirements.map(() => "");
@@ -21,6 +25,27 @@ const AnalysisTable = ({
         answers: answerArray,
       },
     ]);
+  };
+
+  const handleSelectOrUnselectCoordinate = (title: string, index: number) => {
+    const coordinate = { title, index };
+    if (
+      coordinates.some(
+        (existingCoordinate) =>
+          existingCoordinate.title === title &&
+          existingCoordinate.index === index
+      )
+    ) {
+      setCoordinates((prevCoordinates) =>
+        prevCoordinates.filter(
+          (existingCoordinate) =>
+            existingCoordinate.title !== title ||
+            existingCoordinate.index !== index
+        )
+      );
+    } else {
+      setCoordinates((prevCoordinates) => [...prevCoordinates, coordinate]);
+    }
   };
 
   const handleUpdateTitle = (index: number, title: string) => {
@@ -48,7 +73,12 @@ const AnalysisTable = ({
                   key={index}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 min-h-12"
                 >
-                  <td className="px-6 py-4">
+                  <td
+                    className="px-6 py-4"
+                    onClick={() =>
+                      handleSelectOrUnselectCoordinate(analysis.title, index)
+                    }
+                  >
                     {answer.length ? answer : "Click to select for fill in..."}
                   </td>
                 </tr>
