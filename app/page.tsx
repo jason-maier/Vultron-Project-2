@@ -35,7 +35,8 @@ export default function Home() {
   }, [requirements]);
 
   const generateAnalyses = async (prompt: string[]) => {
-    const response = await complete(prompt);
+    // TODO: Fix this type
+    const response = await complete(prompt as unknown as string);
 
     if (response) {
       const parsedResponse = JSON.parse(response);
