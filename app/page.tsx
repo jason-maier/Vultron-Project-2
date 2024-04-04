@@ -16,8 +16,6 @@ export interface Coordinate {
   index: number;
 }
 
-// given the requirement ${requirement}, ${analysis.prompt}
-
 export default function Home() {
   const [requirements, setRequirements] = useState<string[]>([]);
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
@@ -55,10 +53,8 @@ export default function Home() {
       const analysis = analyses.find(
         (analysis) => analysis.title === coordinate.title
       );
-      return `given the requirement ${requirement}, ${analysis?.prompt}`;
+      return `given the requirement ${requirement}, ${analysis?.prompt} limit to 30 words`;
     });
-
-    console.log(prompts, "<<<< PROMPTS");
 
     const generatedAnalyses = await generateAnalyses(prompts);
 
@@ -79,11 +75,10 @@ export default function Home() {
     });
   };
 
-  console.log(coordinates, "<<<< COORDINATES");
-
   return (
     <main className="flex min-h-screen flex-col p-24">
       <h1 className="text-3xl">Requirement Analysis Generator</h1>
+      <button onClick={generateAnalysis}>GENERATE</button>
       <div className="flex flex-row overflow-x-auto">
         <RequirementsTable
           requirements={requirements}
@@ -96,7 +91,6 @@ export default function Home() {
           setAnalyses={setAnalyses}
           setCoordinates={setCoordinates}
         />
-        <button onClick={generateAnalysis}>GENERATE</button>
       </div>
     </main>
   );
