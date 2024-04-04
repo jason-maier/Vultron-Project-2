@@ -53,7 +53,7 @@ export default function Home() {
       const analysis = analyses.find(
         (analysis) => analysis.title === coordinate.title
       );
-      return `given the requirement ${requirement}, ${analysis?.prompt} limit to 30 words`;
+      return `given the requirement ${requirement}, ${analysis?.prompt} limit to 25 words`;
     });
 
     const generatedAnalyses = await generateAnalyses(prompts);

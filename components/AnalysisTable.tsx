@@ -65,43 +65,44 @@ const AnalysisTable = ({
     );
   };
   return (
-    <div className="flex flex-row w-1/5">
-      {analyses.map((analysis, index) => (
-        <div key={index} className="mt-12">
-          <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-48">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
+    <div className="flex flex-row">
+      <div className="mt-12 flex flex-row">
+        <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-48">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              {analyses.map((analysis, index) => (
+                <th key={index} scope="col" className="px-6 py-3">
                   {analysis.title}
                 </th>
-              </tr>
-            </thead>
-            <tbody>
-              {analysis.answers.map((answer, index) => (
-                <tr
-                  key={index}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 min-h-12"
-                >
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {/* Determine the number of table rows using the length of answers */}
+            {/* Iterate through analyses to get each individual analysis */}
+            {requirements.map((requirement, index) => (
+              <tr
+                key={index}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              >
+                {analyses.map((analysis, i) => (
                   <td
+                    key={i}
                     className="px-6 py-4"
                     onClick={() =>
                       handleSelectOrUnselectCoordinate(analysis.title, index)
                     }
                   >
-                    {answer.length ? answer : "Click to select for fill in..."}
+                    {analysis.answers[index]
+                      ? analysis.answers[index]
+                      : "Click to add analysis..."}
                   </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <AnalysisInputs
-            analysis={analysis}
-            index={index}
-            handleUpdatePrompt={handleUpdatePrompt}
-            handleUpdateTitle={handleUpdateTitle}
-          />
-        </div>
-      ))}
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <button
         className="bg-black text-white font-bold py-2 px-4 rounded ml-4 mt-12 h-12 min-w-36"
         onClick={handleAddAnalysis}
@@ -113,3 +114,12 @@ const AnalysisTable = ({
 };
 
 export default AnalysisTable;
+
+{
+  /* <AnalysisInputs
+            analysis={analysis}
+            index={index}
+            handleUpdatePrompt={handleUpdatePrompt}
+            handleUpdateTitle={handleUpdateTitle}
+          /> */
+}
