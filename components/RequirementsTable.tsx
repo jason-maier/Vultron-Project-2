@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 interface RequirementsTableProps {
   heights: number[];
@@ -12,6 +12,7 @@ const RequirementsTable = ({
   setRequirements,
 }: RequirementsTableProps) => {
   const requirementInputRef = useRef<HTMLInputElement>(null);
+  const [currentRequirement, setCurrentRequirement] = useState<string>("");
 
   const handleAddRequirement = () => {
     const requirement = requirementInputRef.current?.value;
@@ -56,10 +57,13 @@ const RequirementsTable = ({
           id="requirement_input"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4"
           placeholder="Type your requirement here..."
-          ref={requirementInputRef}
+          onChange={(e) => setCurrentRequirement(e.target.value)}
+          value={currentRequirement}
         />
         <button
-          className="bg-black text-white font-bold py-2 px-4 rounded mt-4"
+          className={`${
+            currentRequirement.length > 0 ? "bg-black" : "bg-slate-300"
+          } text-white font-bold py-2 px-4 rounded mt-4`}
           onClick={handleAddRequirement}
         >
           Add Requirement

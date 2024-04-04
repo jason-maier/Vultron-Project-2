@@ -4,7 +4,7 @@ import { useEffect } from "react";
 interface AnalysisTableProps {
   analyses: Analysis[];
   coordinates: Coordinate[];
-  heights: number[];
+  isLoading: boolean;
   requirements: string[];
   setAnalyses: React.Dispatch<React.SetStateAction<Analysis[]>>;
   setCoordinates: React.Dispatch<React.SetStateAction<Coordinate[]>>;
@@ -14,7 +14,7 @@ interface AnalysisTableProps {
 const AnalysisTable = ({
   analyses,
   coordinates,
-  heights,
+  isLoading,
   requirements,
   setAnalyses,
   setCoordinates,
@@ -25,6 +25,18 @@ const AnalysisTable = ({
     const newHeights = Array.from(trs).map((tr) => tr.clientHeight);
     setHeights(newHeights);
   }, [analyses, setHeights]);
+
+  useEffect(() => {
+    const tds = document.querySelectorAll("td");
+
+    tds.forEach((td) => {
+      if (td.classList.contains("active")) {
+        if (isLoading) {
+          td.classList.add("loading");
+        }
+      }
+    });
+  }, [isLoading]);
 
   const toggleActive = (e: React.MouseEvent<HTMLTableDataCellElement>) => {
     e.currentTarget.classList.toggle("active");
