@@ -20,7 +20,7 @@ const AnalysisTable = ({
     setAnalyses((prevAnalyses) => [
       ...prevAnalyses,
       {
-        title: "Example Title",
+        title: `Example Title ${prevAnalyses.length + 1}`,
         prompt: "Example Prompt",
         answers: answerArray,
       },
