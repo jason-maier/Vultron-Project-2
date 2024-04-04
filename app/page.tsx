@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import AnalysisTable from "@/components/AnalysisTable";
 import RequirementsTable from "@/components/RequirementsTable";
+import { useCompletion } from "ai/react";
 
 export interface Analysis {
   title: string;
@@ -10,9 +11,37 @@ export interface Analysis {
   answers: string[];
 }
 
+// given the requirement ${requirement}, ${analysis.prompt}
+
 export default function Home() {
   const [requirements, setRequirements] = useState<string[]>([]);
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
+  const [stringsToAssign, setStringsToAssign] = useState<string[]>([]);
+
+  const { complete } = useCompletion({
+    api: "/api/completion",
+  });
+
+  const generateAnalyses = async (prompt: string[]) => {
+    const response = await complete(prompt);
+
+    if (response) {
+      const parsedResponse = JSON.parse(response);
+      setStringsToAssign(
+        parsedResponse.choices.map((choice: any) => choice.text)
+      );
+      return parsedResponse.choices.map((choice: any) => choice.text);
+    }
+  };
+
+  console.log(stringsToAssign, "<<<< STRINGS TO ASSIGN");
+
+  useEffect(() => {
+    const analysis = generateAnalyses([
+      "Provide some good names for coffee shops",
+      "Provide some good names for electronics stores",
+    ]);
+  }, []);
 
   useEffect(() => {
     setAnalyses((prevAnalyses) =>
