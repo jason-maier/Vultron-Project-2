@@ -22,7 +22,7 @@ const AnalysisTable = ({
       ...prevAnalyses,
       {
         title: `Example Title ${prevAnalyses.length + 1}`,
-        prompt: "Example Prompt",
+        prompt: "Write your prompt here...",
         answers: answerArray,
       },
     ]);
@@ -65,50 +65,61 @@ const AnalysisTable = ({
     );
   };
   return (
-    <div className="w-2/3 overflow-x-auto flex flex-row">
-      <div className="mt-12 flex flex-row">
-        <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-48">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              {analyses.map((analysis, index) => (
-                <th key={index} scope="col" className="px-6 py-3">
-                  {analysis.title}
-                </th>
+    <div className="w-4/5 overflow-scroll flex flex-row mt-12">
+      <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-48 table-fixed">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            {analyses.map((analysis, index) => (
+              <th key={index} scope="col" className="px-6 py-3">
+                <input
+                  value={analysis.title}
+                  onChange={(e) => {
+                    handleUpdateTitle(index, e.target.value);
+                  }}
+                />
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {/* Determine the number of table rows using the length of answers */}
+          {/* Iterate through analyses to get each individual analysis */}
+          {requirements.map((requirement, index) => (
+            <tr
+              key={index}
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+            >
+              {analyses.map((analysis, i) => (
+                <td
+                  key={i}
+                  className="px-6 py-4"
+                  onClick={() =>
+                    handleSelectOrUnselectCoordinate(analysis.title, index)
+                  }
+                >
+                  {analysis.answers[index]
+                    ? analysis.answers[index]
+                    : "Click to add analysis..."}
+                </td>
               ))}
             </tr>
-          </thead>
-          <tbody>
-            {/* Determine the number of table rows using the length of answers */}
-            {/* Iterate through analyses to get each individual analysis */}
-            {requirements.map((requirement, index) => (
-              <tr
-                key={index}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-              >
-                {analyses.map((analysis, i) => (
-                  <td
-                    key={i}
-                    className="px-6 py-4"
-                    onClick={() =>
-                      handleSelectOrUnselectCoordinate(analysis.title, index)
-                    }
-                  >
-                    {analysis.answers[index]
-                      ? analysis.answers[index]
-                      : "Click to add analysis..."}
-                  </td>
-                ))}
-              </tr>
+          ))}
+          {/* Make a row of each of the prompts for the analyses */}
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            {analyses.map((analysis, index) => (
+              <td key={index} className="px-6 py-4">
+                <textarea
+                  className="border-gray-900 border rounded-lg p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  value={analysis.prompt}
+                  onChange={(e) => {
+                    handleUpdatePrompt(index, e.target.value);
+                  }}
+                />
+              </td>
             ))}
-          </tbody>
-        </table>
-      </div>
-      <button
-        className="bg-black text-white font-bold py-2 px-4 rounded ml-4 mt-12 h-12 min-w-36"
-        onClick={handleAddAnalysis}
-      >
-        Add Analysis
-      </button>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };

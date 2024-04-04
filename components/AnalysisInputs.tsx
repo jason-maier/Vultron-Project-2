@@ -14,7 +14,7 @@ const AnalysisInputs = ({
   handleUpdateTitle,
 }: AnalysisInputsProps) => {
   return (
-    <div>
+    <div className="flex flex-col">
       <label
         htmlFor="title_input"
         className="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"

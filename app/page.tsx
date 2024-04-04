@@ -26,6 +26,15 @@ export default function Home() {
     api: "/api/completion",
   });
 
+  useEffect(() => {
+    setAnalyses((prevAnalyses) =>
+      prevAnalyses.map((analysis) => ({
+        ...analysis,
+        answers: [...analysis.answers, ""],
+      }))
+    );
+  }, [requirements]);
+
   const generateAnalyses = async (prompt: string[]) => {
     const response = await complete(prompt);
 
@@ -37,15 +46,6 @@ export default function Home() {
       return parsedResponse.choices.map((choice: any) => choice.text);
     }
   };
-
-  useEffect(() => {
-    setAnalyses((prevAnalyses) =>
-      prevAnalyses.map((analysis) => ({
-        ...analysis,
-        answers: [...analysis.answers, ""],
-      }))
-    );
-  }, [requirements]);
 
   const generateAnalysis = async () => {
     const prompts = coordinates.map((coordinate) => {
@@ -75,12 +75,24 @@ export default function Home() {
     });
   };
 
+  const handleAddAnalysis = () => {
+    const answerArray = requirements.map(() => "");
+    setAnalyses((prevAnalyses) => [
+      ...prevAnalyses,
+      {
+        title: `Example Title ${prevAnalyses.length + 1}`,
+        prompt: "Write your prompt here...",
+        answers: answerArray,
+      },
+    ]);
+  };
+
   return (
     <main className="flex min-h-screen flex-col p-24">
       <div className="flex flex-row">
         <h1 className="text-3xl">Requirement Analysis Generator</h1>
         <button
-          className="bg-black text-white font-bold ml-4 py-2 px-4 rounded flex flex-row"
+          className="bg-black text-white font-bold ml-4 py-2 px-4 rounded flex flex-row items-center h-12 min-w-36"
           onClick={generateAnalysis}
         >
           Generate AI Analyses
@@ -101,6 +113,12 @@ export default function Home() {
               d="M16.872 9.687 20 6.56 17.44 4 4 17.44 6.56 20 16.873 9.687Zm0 0-2.56-2.56M6 7v2m0 0v2m0-2H4m2 0h2m7 7v2m0 0v2m0-2h-2m2 0h2M8 4h.01v.01H8V4Zm2 2h.01v.01H10V6Zm2-2h.01v.01H12V4Zm8 8h.01v.01H20V12Zm-2 2h.01v.01H18V14Zm2 2h.01v.01H20V16Z"
             />
           </svg>
+        </button>
+        <button
+          className="bg-black text-white font-bold py-2 px-4 rounded ml-4 h-12 min-w-36"
+          onClick={handleAddAnalysis}
+        >
+          Add Analysis
         </button>
       </div>
       <div className="flex flex-row overflow-x-auto">
