@@ -25,26 +25,29 @@ const RequirementsTable = ({
 
   return (
     <div className="w-1/5 relative overflow-x-scroll mr-12 mt-12">
-      <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Requirements
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {requirements.map((requirement, index) => (
-            <tr
-              key={index}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-              style={{ height: `${heights[index]}px` }}
-            >
-              <td className="px-6 py-4">{requirement}</td>
+      {requirements.length != 0 && (
+        <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Requirements
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {requirements.map((requirement, index) => (
+              <tr
+                key={index}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                style={{ height: `${heights[index]}px` }}
+              >
+                <td className="px-6 py-4">{requirement}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
       <div className="mt-4">
         <label
           htmlFor="prompt_input"
