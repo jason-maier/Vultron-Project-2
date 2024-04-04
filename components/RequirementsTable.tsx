@@ -15,11 +15,12 @@ const RequirementsTable = ({
   const [currentRequirement, setCurrentRequirement] = useState<string>("");
 
   const handleAddRequirement = () => {
-    const requirement = requirementInputRef.current?.value;
-
-    if (requirement) {
-      setRequirements((prevRequirements) => [...prevRequirements, requirement]);
-      requirementInputRef.current.value = "";
+    if (currentRequirement.length > 0) {
+      setRequirements((prevRequirements) => [
+        ...prevRequirements,
+        currentRequirement,
+      ]);
+      setCurrentRequirement("");
     }
   };
 
