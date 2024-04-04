@@ -1,11 +1,13 @@
 import { useRef } from "react";
 
 interface RequirementsTableProps {
+  heights: number[];
   requirements: string[];
   setRequirements: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const RequirementsTable = ({
+  heights,
   requirements,
   setRequirements,
 }: RequirementsTableProps) => {
@@ -35,6 +37,7 @@ const RequirementsTable = ({
             <tr
               key={index}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              style={{ height: `${heights[index]}px` }}
             >
               <td className="px-6 py-4">{requirement}</td>
             </tr>

@@ -1,22 +1,30 @@
 import { Analysis, Coordinate } from "@/app/page";
+import { useEffect } from "react";
 
 interface AnalysisTableProps {
   analyses: Analysis[];
   coordinates: Coordinate[];
+  heights: number[];
   requirements: string[];
   setAnalyses: React.Dispatch<React.SetStateAction<Analysis[]>>;
   setCoordinates: React.Dispatch<React.SetStateAction<Coordinate[]>>;
+  setHeights: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const AnalysisTable = ({
   analyses,
   coordinates,
+  heights,
   requirements,
   setAnalyses,
   setCoordinates,
+  setHeights,
 }: AnalysisTableProps) => {
-  // Write a function so that on click each td item toggles the active class
-  // The active class should be a different color
+  useEffect(() => {
+    const trs = document.querySelectorAll(".analysis-table-row");
+    const newHeights = Array.from(trs).map((tr) => tr.clientHeight);
+    setHeights(newHeights);
+  }, [analyses, setHeights]);
 
   const toggleActive = (e: React.MouseEvent<HTMLTableDataCellElement>) => {
     e.currentTarget.classList.toggle("active");
@@ -59,7 +67,7 @@ const AnalysisTable = ({
     );
   };
   return (
-    <div className="w-4/5 overflow-scroll flex flex-row mt-12">
+    <div className="w-4/5 overflow-scroll mt-12">
       <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-48 table-fixed">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -80,7 +88,7 @@ const AnalysisTable = ({
           {requirements.map((requirement, index) => (
             <tr
               key={index}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 analysis-table-row"
             >
               {analyses.map((analysis, i) => (
                 <td
@@ -93,7 +101,7 @@ const AnalysisTable = ({
                 >
                   {analysis.answers[index]
                     ? analysis.answers[index]
-                    : "Click to add analysis..."}
+                    : "Select to add analysis..."}
                 </td>
               ))}
             </tr>

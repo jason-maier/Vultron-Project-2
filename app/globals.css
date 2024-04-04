@@ -30,6 +30,11 @@ td {
   cursor: pointer;
 }
 
+tr,
+td {
+  height: 68px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
