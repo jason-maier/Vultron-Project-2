@@ -105,7 +105,11 @@ const AnalysisTable = ({
               {analyses.map((analysis, i) => (
                 <td
                   key={i}
-                  className="px-6 py-4"
+                  className={`${
+                    analysis.answers[index]
+                      ? "text-slate-500"
+                      : "text-slate-300"
+                  } px-6 py-4`}
                   onClick={(event) => {
                     toggleActive(event);
                     handleSelectOrUnselectCoordinate(analysis.title, index);
