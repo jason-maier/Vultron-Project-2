@@ -104,7 +104,8 @@ export default function Home() {
   const disableGenerateButton =
     requirements.length === 0 ||
     analyses.length === 0 ||
-    coordinates.length === 0;
+    coordinates.length === 0 ||
+    isLoading;
 
   return (
     <main className="flex min-h-screen flex-col p-24">
