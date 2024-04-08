@@ -5,6 +5,7 @@
 /* colors */
 :root {
   --background-color: #fffcf6;
+  --background-light-blue: #c7d9e0;
   --border-blue: #bfd4db;
   --color-blue: #16325f;
   --dark-blue: #0d1c40;
@@ -38,6 +39,8 @@ td {
 tr,
 td {
   height: 68px;
+  min-width: 18rem;
+  width: 18rem;
 }
 
 thead {
@@ -57,7 +60,8 @@ thead {
 }
 
 .active {
-  box-shadow: inset 0px 0px 0px 3px #b2a8fd;
+  background-color: var(--background-light-blue);
+  color: var(--color-blue);
 }
 
 .loading {

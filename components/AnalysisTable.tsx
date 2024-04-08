@@ -84,7 +84,7 @@ const AnalysisTable = ({
         <thead className="uppercase">
           <tr>
             {analyses.map((analysis, index) => (
-              <th key={index} scope="col" className="min-w-48 px-6 py-3">
+              <th key={index} scope="col" className="px-6 py-3">
                 <input
                   className="border-gray-900 border rounded-lg p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   value={analysis.title}
