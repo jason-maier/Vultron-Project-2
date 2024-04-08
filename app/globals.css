@@ -63,3 +63,7 @@ thead {
   background-color: var(--background-light-blue);
   color: var(--color-blue);
 }
+
+.max-w-8xl {
+  max-width: 88rem;
+}

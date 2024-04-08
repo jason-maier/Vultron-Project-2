@@ -116,7 +116,7 @@ export default function Home() {
             disabled={requirements.length === 0}
             onClick={handleAddAnalysis}
           >
-            Add Analysis
+            Add Analysis Column
           </button>
           <button
             className="font-bold ml-4 py-2 px-4 rounded flex flex-row items-center h-12 min-w-36"

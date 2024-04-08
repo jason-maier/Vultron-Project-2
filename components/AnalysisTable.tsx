@@ -87,7 +87,7 @@ const AnalysisTable = ({
     );
   };
   return (
-    <div className="max-w-7xl relative overflow-x-scroll mt-12 rounded-lg">
+    <div className="max-w-8xl relative overflow-x-scroll mt-12 rounded-lg">
       <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-48 table-fixed">
         <thead className="uppercase">
           <tr>
