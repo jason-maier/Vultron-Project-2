@@ -157,6 +157,7 @@ export default function Home() {
         <AnalysisTable
           analyses={analyses}
           coordinates={coordinates}
+          heights={heights}
           isLoading={isLoading}
           requirements={requirements}
           setAnalyses={setAnalyses}

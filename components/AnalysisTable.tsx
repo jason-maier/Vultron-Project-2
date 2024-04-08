@@ -4,6 +4,7 @@ import { useEffect } from "react";
 interface AnalysisTableProps {
   analyses: Analysis[];
   coordinates: Coordinate[];
+  heights: number[];
   isLoading: boolean;
   requirements: string[];
   setAnalyses: React.Dispatch<React.SetStateAction<Analysis[]>>;
@@ -22,6 +23,7 @@ const spinner = `<div role="status">
 const AnalysisTable = ({
   analyses,
   coordinates,
+  heights,
   isLoading,
   requirements,
   setAnalyses,
@@ -109,6 +111,7 @@ const AnalysisTable = ({
             <tr
               key={index}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 analysis-table-row"
+              style={{ height: `${heights[index]}px` }}
             >
               {analyses.map((analysis, i) => (
                 <td
