@@ -24,7 +24,7 @@ export default function Home() {
   const [requirements, setRequirements] = useState<string[]>([]);
 
   const { complete } = useCompletion({
-    api: "/api/completion",
+    api: "/api/chat/completion",
   });
 
   useEffect(() => {
@@ -37,13 +37,19 @@ export default function Home() {
   }, [requirements]);
 
   const generateAnalyses = async (prompt: string[]) => {
-    // TODO: Fix this type
-    const response = await complete(prompt as unknown as string);
+    console.log(prompt, "<<<< PROMPT");
+    const analysisPromises = prompt.map((prompt) => complete(prompt));
+    const responses = await Promise.all(analysisPromises);
 
-    if (response) {
+    return responses.map((response) => {
+      if (!response)
+        return JSON.stringify({
+          choices: [{ message: { content: "No response" } }],
+        });
+
       const parsedResponse = JSON.parse(response);
-      return parsedResponse.choices.map((choice: any) => choice.text);
-    }
+      return parsedResponse.choices[0].message.content;
+    });
   };
 
   const generateAnalysis = async () => {
@@ -54,7 +60,7 @@ export default function Home() {
         const analysis = analyses.find(
           (analysis) => analysis.title === coordinate.title
         );
-        return `given the requirement ${requirement}, ${analysis?.prompt} limit to 25 words`;
+        return `given the requirement ${requirement}, ${analysis?.prompt} limit the response to 35 words`;
       });
 
       const generatedAnalyses = await generateAnalyses(prompts);
@@ -88,6 +94,8 @@ export default function Home() {
       setIsLoading(false);
     }
   };
+
+  console.log(analyses, "<<<< ANALYSES");
 
   const handleAddAnalysis = () => {
     const answerArray = requirements.map(() => "");
