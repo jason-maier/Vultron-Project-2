@@ -36,11 +36,13 @@ td {
   cursor: pointer;
 }
 
-tr,
-td {
+td,
+th,
+tr {
   height: 68px;
   min-width: 18rem;
   width: 18rem;
+  max-width: 18rem;
 }
 
 thead {
