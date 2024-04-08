@@ -112,15 +112,13 @@ export default function Home() {
         <h1 className="text-3xl font-bold">Requirement Analysis Generator</h1>
         <div className="flex flex-row">
           <button
-            className="bg-black text-white font-bold py-2 px-4 rounded ml-4 h-12 min-w-36"
+            className="font-bold py-2 px-4 rounded ml-4 h-12 min-w-36"
             onClick={handleAddAnalysis}
           >
             Add Analysis
           </button>
           <button
-            className={`${
-              disableGenerateButton ? "bg-slate-300" : "bg-black"
-            } text-white font-bold ml-4 py-2 px-4 rounded flex flex-row items-center h-12 min-w-36`}
+            className="font-bold ml-4 py-2 px-4 rounded flex flex-row items-center h-12 min-w-36"
             onClick={generateAnalysis}
             disabled={disableGenerateButton}
           >

@@ -64,9 +64,8 @@ const RequirementsTable = ({
           value={currentRequirement}
         />
         <button
-          className={`${
-            currentRequirement.length > 0 ? "bg-black" : "bg-slate-300"
-          } text-white font-bold py-2 px-4 rounded mt-4`}
+          className="font-bold py-2 px-4 rounded mt-4"
+          disabled={currentRequirement.length === 0}
           onClick={handleAddRequirement}
         >
           Add Requirement
