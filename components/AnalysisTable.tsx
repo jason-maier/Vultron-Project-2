@@ -79,12 +79,12 @@ const AnalysisTable = ({
     );
   };
   return (
-    <div className="w-4/5 overflow-scroll mt-12">
+    <div className="w-4/5 relative overflow-x-scroll mt-12">
       <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 min-w-48 table-fixed">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="uppercase">
           <tr>
             {analyses.map((analysis, index) => (
-              <th key={index} scope="col" className="px-6 py-3">
+              <th key={index} scope="col" className="min-w-48 px-6 py-3">
                 <input
                   className="border-gray-900 border rounded-lg p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   value={analysis.title}
@@ -122,16 +122,23 @@ const AnalysisTable = ({
               ))}
             </tr>
           ))}
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr>
             {analyses.map((analysis, index) => (
-              <td key={index} className="px-6 py-4">
+              <td key={index} className="prompt-section px-6">
+                <label
+                  htmlFor="prompt_input"
+                  className="block mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Add Prompt
+                </label>
                 <textarea
-                  className="border-gray-900 border rounded-lg p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  id="prompt_input"
+                  className="border rounded-lg mt-4 p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                   value={analysis.prompt}
                   onChange={(e) => {
                     handleUpdatePrompt(index, e.target.value);
                   }}
-                  placeholder="Write your prompt here..."
+                  placeholder={`Write your prompt for ${analysis.title} here...`}
                 />
               </td>
             ))}

@@ -1,12 +1,14 @@
 import { useState } from "react";
 
 interface RequirementsTableProps {
+  handleAddAnalysis: () => void;
   heights: number[];
   requirements: string[];
   setRequirements: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const RequirementsTable = ({
+  handleAddAnalysis,
   heights,
   requirements,
   setRequirements,
@@ -21,13 +23,17 @@ const RequirementsTable = ({
       ]);
       setCurrentRequirement("");
     }
+
+    if (requirements.length === 0) {
+      handleAddAnalysis();
+    }
   };
 
   return (
-    <div className="w-1/5 relative overflow-x-scroll mr-12 mt-12">
+    <div className="w-1/5 relative overflow-x-scroll mr-12 mt-12 rounded-lg">
       {requirements.length != 0 && (
-        <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table className="min-w-full text-sm text-left rtl:text-right">
+          <thead className="uppercase">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Requirements
@@ -50,16 +56,15 @@ const RequirementsTable = ({
 
       <div className="mt-4">
         <label
-          htmlFor="prompt_input"
-          className="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+          htmlFor="requirement_input"
+          className="block mt-4 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Add a requirement here
+          Add Requirement
         </label>
-        <input
-          type="text"
+        <textarea
           id="requirement_input"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4"
-          placeholder="Type your requirement here..."
+          className="border rounded-lg mt-4 p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Write your requirement here..."
           onChange={(e) => setCurrentRequirement(e.target.value)}
           value={currentRequirement}
         />

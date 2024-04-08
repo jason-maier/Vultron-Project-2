@@ -17,6 +17,8 @@ body {
   background: var(--background-color);
 }
 
+/* Button Styles */
+
 button {
   background-color: var(--dark-blue);
   color: white;
@@ -27,6 +29,8 @@ button:disabled {
   color: var(--disabled-button-color-blue);
 }
 
+/* Table Styles */
+
 td {
   cursor: pointer;
 }
@@ -34,6 +38,16 @@ td {
 tr,
 td {
   height: 68px;
+}
+
+thead {
+  background-color: var(--dark-blue);
+  color: white;
+}
+
+.prompt-section {
+  background-color: var(--background-color);
+  border: none;
 }
 
 @layer utilities {

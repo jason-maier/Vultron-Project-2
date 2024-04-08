@@ -113,6 +113,7 @@ export default function Home() {
         <div className="flex flex-row">
           <button
             className="font-bold py-2 px-4 rounded ml-4 h-12 min-w-36"
+            disabled={requirements.length === 0}
             onClick={handleAddAnalysis}
           >
             Add Analysis
@@ -147,6 +148,7 @@ export default function Home() {
       </div>
       <div className="flex flex-row overflow-x-auto">
         <RequirementsTable
+          handleAddAnalysis={handleAddAnalysis}
           heights={heights}
           requirements={requirements}
           setRequirements={setRequirements}
