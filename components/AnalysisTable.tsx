@@ -129,6 +129,7 @@ const AnalysisTable = ({
                   {analysis.answers[index]
                     ? analysis.answers[index]
                     : "Select to add analysis..."}
+                  <div className="hidden">{analysis.title}</div>
                 </td>
               ))}
             </tr>

@@ -52,6 +52,64 @@ export default function Home() {
     });
   };
 
+  // create a generateAnalysisInParallel function that takes no arguments
+  // this function iterates over the coordinates array to build the correct prompt
+  // for each coordinate, it generates a prompt using the requirements array and the analyses array
+  // it then calls the complete function with the prompt
+  // it uses the response and the coordinate to update the analyses array
+  // this function does not use promises.all instead it uses a forEach loop
+  // the function should be async and return void
+  // the function should be called when the generate button is clicked
+  // the function should be defined outside the component
+  // the function should be called generateAnalysisInParallel
+  // the function should set the isLoading state to true when it starts and false when it ends
+  // the function should be called when the generate button is clicked
+  // the function after it sets the analysis should remove the active class from the td element that was clicked and only that specific element
+
+  console.log(coordinates, "<<<< COORDINATES");
+
+  const generateAnalysesInParallel = async () => {
+    coordinates.forEach(async (coordinate) => {
+      const requirement = requirements[coordinate.index];
+      const analysis = analyses.find(
+        (analysis) => analysis.title === coordinate.title
+      );
+      const prompt = `given the requirement ${requirement}, ${analysis?.prompt} limit the response to 35 words`;
+      const response = await complete(prompt);
+      const parsedResponse = JSON.parse(response);
+      const analysisAnswer = parsedResponse.choices[0].message.content;
+      setAnalyses((prevAnalyses) =>
+        prevAnalyses.map((prevAnalysis) =>
+          prevAnalysis.title === coordinate.title
+            ? {
+                ...prevAnalysis,
+                answers: prevAnalysis.answers.map((answer, i) =>
+                  i === coordinate.index ? analysisAnswer : answer
+                ),
+              }
+            : prevAnalysis
+        )
+      );
+
+      const tds = document.querySelectorAll("td");
+
+      tds.forEach((td) => {
+        console.log(td.querySelector("div")?.textContent, "<<<< HELLO");
+
+        if (td.querySelector("div")?.textContent === coordinate.title) {
+          if (
+            Array.from(td.parentElement.children).indexOf(td) ===
+            coordinate.index
+          ) {
+            td.classList.remove("active");
+          }
+        }
+      });
+    });
+
+    setCoordinates([]);
+  };
+
   const generateAnalysis = async () => {
     setIsLoading(true);
     try {
@@ -109,6 +167,25 @@ export default function Home() {
     ]);
   };
 
+  // this function should first set the state of isLoading to true
+  // it should then call the async function generateAnalysesInParallel
+  // after the function is called it should set the isLoading state to false and the coordinates state to an empty array
+  // the function should be called when the generate button is clicked
+  // it should be written so that the order of events is maintained
+  const handleGenerateAnalysesButtonClick = () => {
+    setIsLoading(true);
+    generateAnalysesInParallel();
+    setIsLoading(false);
+  };
+
+  console.log(
+    requirements.length,
+    analyses.length,
+    coordinates.length,
+    isLoading,
+    "<<<< REQUIREMENTS, ANALYSES, COORDINATES, ISLOADING"
+  );
+
   const disableGenerateButton =
     requirements.length === 0 ||
     analyses.length === 0 ||
@@ -129,7 +206,7 @@ export default function Home() {
           </button>
           <button
             className="font-bold ml-4 py-2 px-4 rounded flex flex-row items-center h-12 min-w-36"
-            onClick={generateAnalysis}
+            onClick={handleGenerateAnalysesButtonClick}
             disabled={disableGenerateButton}
           >
             <div className={`${isLoading ? "loading" : ""} flex flex-row`}>
