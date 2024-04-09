@@ -44,7 +44,7 @@ export default function Home() {
       );
       const prompt = `given the requirement ${requirement}, ${analysis?.prompt} limit the response to 35 words`;
       const response = await complete(prompt);
-      const parsedResponse = JSON.parse(response);
+      const parsedResponse = response ? JSON.parse(response) : {};
       const analysisAnswer = parsedResponse.choices[0].message.content;
       setAnalyses((prevAnalyses) =>
         prevAnalyses.map((prevAnalysis) =>
